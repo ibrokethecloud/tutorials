@@ -68,3 +68,16 @@ For production grade logging stacks, the users need to decide on factors such as
 * persistence
 * rate of log ingestion, which in turn impacts elasticsearch JVM heap sizing.
 
+The EFK stack installs fluentbit as a daemon set.
+
+![](images/logging14.png)
+
+This allows it to stream all container logs to the ElasticSearch indexes.
+
+We can easily see this in action with a demo-app which just servces a static hello world page with a randomised delay.
+
+The container logs can be viewed in the rancher ui:
+![](images/logging12.png)
+
+The users can now go and search the same logs in the Kibana frontend as well:
+![](images/logging13.png)
