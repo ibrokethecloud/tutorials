@@ -8,7 +8,7 @@ There are a lot of options available in the helm stable catalog, and development
 
 For the purpose of this demo we already have a K8S cluster running and managed by Rancher.
 
-We have setup aa logging project to deploy this on the cluster, as this eventually helps with RBAC to managing the workload at a K8S layer.
+We have setup a logging project to deploy this on the cluster, as this eventually helps with RBAC to managing the workload at a K8S layer.
 
 For the purpose of this demo I will be choosing the ElasticSearch+FluentBit+Kibana stack.
 
@@ -61,7 +61,7 @@ Once this initial setup the users can search for logs from the cluster using Kib
 
 This document hopefully shows how easy it is to setup a logging stack of your choice using the wide variety of community curated helm charts.
 
-This documented is intended to be a quick start reference guide as we used most of the common defaults.
+This document is intended to be a quick start reference guide as we used most of the common defaults.
 
 For production grade logging stacks, the users need to decide on factors such as:
 * log retention duration
