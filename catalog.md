@@ -1,4 +1,4 @@
-## Setting up custom catalog's
+## Setting up custom catalogs
 
 This tutorial aims at showing the flow for setting a custom catalog on Rancher, and using the same to deploy workloads.
 
