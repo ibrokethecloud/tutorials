@@ -56,6 +56,33 @@ Once deployed we can login to the pod and see the extra volume mounted under /bi
 
 All changes to this mount should persist across pod failures.
 
+#### NFS Storage provider
+We will provide a second storage class, which can be easily setup for demo's and if needed eventually fine tuned for long running persistence.
+
+We can deploy the NFS storage provisioner from the rancher library.
+
+Please note that at the time of writing this document this library helm chart is **Experimental** and should not be used for any production grade workloads.
+
+The chart is available in the catalog:
+
+![](images/nfs1.png)
+
+For the purpose of this demo, we will continue with the default values in the chart:
+![](images/nfs2.png)
+
+**NOTE:** If you are using RancherOS for the Worker nodes, then please ensure that the NFS Host Path is /mnt. 
+
+Deploying this chart will create a new storage class at the cluster scope which can now be used by the workloads.
+![](images/nfs3.png)
+
+**Note**: The default settings of the chart do not enable persistence. If you need persistence then this needs to be setup based on your storage requirements.
+
+Now we can redeploy the wordpress helm chart using this NFS provisioner storage driver:
+![](images/nfs4.png)
+
+Once the workload is deployed we should see two new PVC claims using the new nfs provisioner.
+![](images/nfs5.png)
+
 This example shows a simple use case of having persistence. 
 
 Users are advised to look at their workload requirements when deciding on the setup for the storage classes.
