@@ -2,82 +2,34 @@
 
 This guide is intended to provide an example of how to setup a simple logging stack on K8S.
 
-There are a lot of options available in the helm stable catalog, and development / operation teams are free to chose one which works for their use case scenario.
+Rancher itself can integrate with a number of common logging solutions.
 
-![](images/logging1.png)
+The logging can be setup at the cluster level or per project level.
 
-For the purpose of this demo we already have a K8S cluster running and managed by Rancher.
+We will enable the logging at the Cluster scope. 
 
-We have setup a logging project to deploy this on the cluster, as this eventually helps with RBAC to managing the workload at a K8S layer.
+The same steps can also be performed at the Project scope as well.
 
-For the purpose of this demo I will be choosing the ElasticSearch+FluentBit+Kibana stack.
+![](images/rancherlogging1.png)
 
-![](images/logging2.png)
+Rancher supports out of box integration with Elasticsearch, Splunk, Kafka, Syslog and Fluentd.
 
-There are few customisations available in the app, which need to be configured on the use case.
+For the purpose of this example we will use the Elasticsearch integration.
 
-![](images/logging3.png)
+![](images/rancherlogging2.png)
 
-There are some key items to note:
+We need to specify a few mandatory fields:
 
-* The app will spin up 3 elasticsearch pods, so based on the number of worker nodes or how ingress needs to be managed to elasticsearch the team may need to decide if they prefer to use NodePort or ClusterIP.
+* endpoint for Elasticsearch
+* prefix for index name.
 
-For the purpose of this example, we have used ClusterIP
-![](images/logging11.png)
+![](images/rancherlogging3.png)
 
-* The front end for viewing logs is via Kibana, which can be customised further. One key customisation to note of is the **hostname** to use to access Kibana.
+Once the fields are specified, we can **TEST** the integration and **Save** the changes.
 
-The hostname is used to setup the ingress rule on thee ingress controller.
-![](images/logging7.png)
+After the changes are done, we can go to the Kibana search interface for our Elasticsearch instance, and visualise the cluster logs.
 
-For the purpose of this demo we use ***logging.demo**
+![](images/rancherlogging4.png)
 
-* The users may also want to choose how to manage persistence for ElasticSearch. This can be easily achieved by using persistent volume claims. For the purpose of this demo we will not be changing this.
+Since the logging was enabeld at cluster scope we can see logs for all projects in our cluster.
 
-
-We simply now click **Launch** and this should launch the catalog app into the logging project under a new namespace named **efk**
-
-![](images/logging4.png)
-
-Users can now follow the status of the EFK rollout, and in a few mins you should have all the logging components deployed.
-
-![](images/logging5.png)
-
-Users can also now verify the ingress spec to allow access to Kibana.
-
-![](images/logging8.png)
-
-Kibana can now be accessed by pointing the broweser to http://logging.demo
-
-![](images/logging9.png)
-
-As part of the Kibana / ElasticSearch configuration, at first time the user will need to specify an index pattern to use from ElasticSearch.
-
-![](images/logging6.png)
-
-Once this initial setup the users can search for logs from the cluster using Kibana.
-
-![](images/logging10.png)
-
-This document hopefully shows how easy it is to setup a logging stack of your choice using the wide variety of community curated helm charts.
-
-This document is intended to be a quick start reference guide as we used most of the common defaults.
-
-For production grade logging stacks, the users need to decide on factors such as:
-* log retention duration
-* persistence
-* rate of log ingestion, which in turn impacts elasticsearch JVM heap sizing.
-
-The EFK stack installs fluentbit as a daemon set.
-
-![](images/logging14.png)
-
-This allows it to stream all container logs to the ElasticSearch indexes.
-
-We can easily see this in action with a demo-app which just servces a static hello world page with a randomised delay.
-
-The container logs can be viewed in the rancher ui:
-![](images/logging12.png)
-
-The users can now go and search the same logs in the Kibana frontend as well:
-![](images/logging13.png)

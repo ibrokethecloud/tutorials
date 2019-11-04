@@ -67,3 +67,8 @@ For github repos, we can use a Personal Access Token for authentication.
 Once the catalog has been refreshed it is ready for use, and we can deploy our trusted **demo-app** from the catalog.
 
 ![](images/catalog8.png)
+
+##### Additional information
+Catalog items are basically helm charts.
+
+For details on learning how to write helm charts please refer to the official [documentation.](https://helm.sh/docs/developing_charts/)
